@@ -63,6 +63,16 @@ app.get('/posts', async(req, res) => {
     }
 });
 
+app.get('/post/:id', async(req, res) => {
+    const id = req.params.id;
+    try {
+        const post = await getPostById(id);
+        res.status(200).json({ status: 'success', data: post });
+    } catch (error) {
+        res.status(500).json({ status: 'failed', error: error.message });
+    }
+});
+
 app.listen(port, () => {
     console.log(`Server listening at http://127.0.0.1:${port}`);
 })
