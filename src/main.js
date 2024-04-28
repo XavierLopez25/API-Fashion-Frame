@@ -93,6 +93,17 @@ app.post('/post', async(req, res) => {
     }
 });
 
+app.put('/post/:id', async(req, res) => {
+    const id = req.params.id;
+    const { title, warframe, content, tags, image } = req.body;
+    try {
+        await updatePost(id, title, warframe, content, tags, image);
+        res.status(200).json({ status: 'success', message: 'Post updated successfully.' });
+    } catch (error) {
+        res.status(500).json({ status: 'failed', error: error.message });
+    }
+});
+
 app.listen(port, () => {
     console.log(`Server listening at http://127.0.0.1:${port}`);
 })
