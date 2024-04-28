@@ -2,7 +2,7 @@ import express from 'express'
 import cors from 'cors'
 import bodyParser from 'body-parser'
 
-import { registerUser, loginUser } from './db.js';
+import { registerUser, loginUser, getUserById, getPosts, getPostById, getPostsByUser, createPost, updatePost, deletePost } from './db.js';
 
 const app = express();
 app.use(express.json());
@@ -44,6 +44,15 @@ app.post('/login', async(req, res) => {
     }
 });
 
+app.get('/user/:id', async(req, res) => {
+    const id = req.params.id;
+    try {
+        const user = await getUserById(id);
+        res.status(200).json({ status: 'success', data: user });
+    } catch (error) {
+        res.status(500).json({ status: 'failed', error: error.message });
+    }
+});
 
 app.listen(port, () => {
     console.log(`Server listening at http://127.0.0.1:${port}`);
