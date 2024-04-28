@@ -30,13 +30,13 @@ export async function getPostById(id){
 }
 
 export async function createPost(title, warframe, content, tags, image, user_id){
-    const sql = `INSERT INTO blog_posts (title, warframe, content, tags, image, user_id) VALUES ($1, $2, $3, $4, $5, $6)`;
+    const sql = `INSERT INTO blog_posts (title, warframe, content, tags, image_base64, user_id) VALUES ($1, $2, $3, $4, $5, $6)`;
     await conn.query(sql, [title, warframe, content, tags, image, user_id]);
     return true;
 }
 
 export async function updatePost(id, title, warframe, content, tags, image){
-    const sql = `UPDATE blog_posts SET title = $1, warframe = $2, content = $3, tags = $4, image = $5 WHERE id = $6`;
+    const sql = `UPDATE blog_posts SET title = $1, warframe = $2, content = $3, tags = $4, image_base64 = $5 WHERE id = $6`;
     await conn.query(sql, [title, warframe, content, tags, image, id]);
     return true;
 }
