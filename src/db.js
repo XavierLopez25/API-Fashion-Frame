@@ -17,3 +17,8 @@ export async function getUserById(id){
     const result = await conn.query(sql, [id]);
     return result.rows[0].length > 0 ? result.rows[0] : 'No user found.';
 }
+
+export async function getPosts(){
+    const result = await conn.query(`SELECT * FROM blog_posts`);
+    return result.rows.length > 0 ? result.rows : 'No posts found.';
+}
