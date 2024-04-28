@@ -1,0 +1,32 @@
+CREATE TABLE IF NOT EXISTS users (
+    id SERIAL PRIMARY KEY,
+    username VARCHAR(255) UNIQUE NOT NULL,
+    password_md5 CHAR(32) NOT NULL,
+    email VARCHAR(255) UNIQUE NOT NULL
+);
+
+CREATE TABLE IF NOT EXISTS blog_posts (
+    id SERIAL PRIMARY KEY,
+    title VARCHAR(255) NOT NULL,
+    warframe TEXT NOT NULL,
+    content TEXT NOT NULL,
+    tags TEXT NOT NULL,
+    created_at TIMESTAMP WITHOUT TIME ZONE DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP WITHOUT TIME ZONE DEFAULT CURRENT_TIMESTAMP,
+    image_base64 TEXT,
+    user_id INTEGER REFERENCES users(id)
+);
+
+CREATE OR REPLACE FUNCTION update_blog_post_timestamp()
+RETURNS TRIGGER LANGUAGE plpgsql
+AS $$
+BEGIN
+    NEW.updated_at = CURRENT_TIMESTAMP;
+    RETURN NEW;
+END;
+$$;
+
+CREATE TRIGGER update_blog_post_before_update
+BEFORE UPDATE ON blog_posts
+FOR EACH ROW
+EXECUTE PROCEDURE update_blog_post_timestamp();
