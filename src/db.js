@@ -13,7 +13,7 @@ export async function loginUser(username, password_md5){
 }
 
 export async function getUserById(id){
-    const sql = `SELECT * FROM users WHERE id = $1`;
+    const sql = `SELECT username, email FROM users WHERE id = $1`;
     const result = await conn.query(sql, [id]);
     return result.rows[0].length > 0 ? result.rows[0] : 'No user found.';
 }
