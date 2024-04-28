@@ -15,7 +15,7 @@ export async function loginUser(username, password_md5){
 export async function getUserById(id){
     const sql = `SELECT username, email FROM users WHERE id = $1`;
     const result = await conn.query(sql, [id]);
-    return result.rows[0].length > 0 ? result.rows[0] : 'No user found.';
+    return result.rows[0].length > 0 ? 'No user found.' : result.rows[0];
 }
 
 export async function getPosts(){
@@ -26,7 +26,7 @@ export async function getPosts(){
 export async function getPostById(id){
     const sql = `SELECT * FROM blog_posts WHERE id = $1`;
     const result = await conn.query(sql, [id]);
-    return result.rows[0] > 0 ? result.rows[0] : 'No post found.';
+    return result.rows[0] > 0 ? 'No post found.' : result.rows[0];
 }
 
 export async function getPostsByUser(user_id){
