@@ -83,6 +83,16 @@ app.get('/posts/user/:user_id', async(req, res) => {
     }
 });
 
+app.post('/post', async(req, res) => {
+    const { title, warframe, content, tags, image, user_id } = req.body;
+    try {
+        await createPost(title, warframe, content, tags, image, user_id);
+        res.status(201).json({ status: 'success', message: 'Post created successfully.' });
+    } catch (error) {
+        res.status(500).json({ status: 'failed', error: error.message });
+    }
+});
+
 app.listen(port, () => {
     console.log(`Server listening at http://127.0.0.1:${port}`);
 })
