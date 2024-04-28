@@ -29,6 +29,12 @@ export async function getPostById(id){
     return result.rows[0] > 0 ? result.rows[0] : 'No post found.';
 }
 
+export async function getPostsByUser(user_id){
+    const sql = `SELECT * FROM blog_posts WHERE user_id = $1`;
+    const result = await conn.query(sql, [user_id]);
+    return result.rows.length > 0 ? result.rows : 'No posts found.';
+}
+
 export async function createPost(title, warframe, content, tags, image, user_id){
     const sql = `INSERT INTO blog_posts (title, warframe, content, tags, image_base64, user_id) VALUES ($1, $2, $3, $4, $5, $6)`;
     await conn.query(sql, [title, warframe, content, tags, image, user_id]);
