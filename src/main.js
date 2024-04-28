@@ -20,10 +20,9 @@ app.get('/', async(req, res) => {
 
 app.post('/register', async(req, res) => {
     const { username, password_md5, email } = req.body;
-    console.log(req.body);
     try {
         await registerUser(username, password_md5, email);
-        res.status(201).json({ status: 'success', message: 'User registered successfully.' });
+        res.status(201).json({ status: 'success', message: 'User registered successfully.', data: [username, email]});
     } catch (error) {
         res.status(500).json({ status: 'failed', error: error.message });
     }
@@ -35,7 +34,7 @@ app.post('/login', async(req, res) => {
     try {
         const user = await loginUser(username, password_md5);
         if (user) {
-            res.status(200).json({ status: 'success', message: 'User logged in successfully.', data: user });
+            res.status(200).json({ status: 'success', message: 'User logged in successfully.', data: username });
         } else {
             res.status(401).json({ status: 'failed', message: 'Invalid username or password.' });
         }
