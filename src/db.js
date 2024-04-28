@@ -7,7 +7,7 @@ export async function registerUser(username, password_md5, email){
 }
 
 export async function loginUser(username, password_md5){
-    const sql = `SELECT * FROM users WHERE username = $1 AND password_md5 = MD5($2)`;
+    const sql = `SELECT id, username, email FROM users WHERE username = $1 AND password_md5 = MD5($2)`;
     const result = await conn.query(sql, [username, password_md5]);
     return result.rows[0] > 0 ? result.rows[0] : 'Invalid username or password.';
 }
