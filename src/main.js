@@ -104,6 +104,16 @@ app.put('/post/:id', async(req, res) => {
     }
 });
 
+app.delete('/post/:id', async(req, res) => {
+    const id = req.params.id;
+    try {
+        const result = await deletePost(id);
+        res.status(200).json({ status: 'success', message: result });
+    } catch (error) {
+        res.status(500).json({ status: 'failed', error: error.message });
+    }
+});
+
 app.listen(port, () => {
     console.log(`Server listening at http://127.0.0.1:${port}`);
 })
