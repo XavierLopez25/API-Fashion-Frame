@@ -73,6 +73,16 @@ app.get('/post/:id', async(req, res) => {
     }
 });
 
+app.get('/posts/user/:user_id', async(req, res) => {
+    const user_id = req.params.user_id;
+    try {
+        const posts = await getPostsByUser(user_id);
+        res.status(200).json({ status: 'success', data: posts });
+    } catch (error) {
+        res.status(500).json({ status: 'failed', error: error.message });
+    }
+});
+
 app.listen(port, () => {
     console.log(`Server listening at http://127.0.0.1:${port}`);
 })
