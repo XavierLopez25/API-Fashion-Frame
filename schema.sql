@@ -30,3 +30,6 @@ CREATE TRIGGER update_blog_post_before_update
 BEFORE UPDATE ON blog_posts
 FOR EACH ROW
 EXECUTE PROCEDURE update_blog_post_timestamp();
+
+ALTER TABLE users
+ADD COLUMN role VARCHAR(255) DEFAULT 'Usuario';
