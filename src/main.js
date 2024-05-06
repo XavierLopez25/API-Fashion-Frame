@@ -15,7 +15,7 @@ import {
   deletePost,
 } from './db.js';
 
-import  authenticateToken  from './middleware.js';
+import authenticateToken from './middleware.js';
 
 const app = express();
 app.use(express.json());
@@ -118,7 +118,7 @@ app.post('/post', authenticateToken, async (req, res) => {
   }
 });
 
-app.put('/post/:id', async (req, res) => {
+app.put('/post/:id', authenticateToken, async (req, res) => {
   const id = req.params.id;
   const { title, warframe, content, tags, image } = req.body;
   try {
