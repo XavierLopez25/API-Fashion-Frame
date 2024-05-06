@@ -15,6 +15,8 @@ import {
   deletePost,
 } from './db.js';
 
+import  authenticateToken  from './middleware.js';
+
 const app = express();
 app.use(express.json());
 app.use(bodyParser.json());
@@ -55,6 +57,7 @@ app.post('/login', async (req, res) => {
         status: 'success',
         message: 'User logged in successfully.',
         username: user.username,
+        id: user.id,
         token: token,
         role: user.role,
       });
@@ -76,7 +79,7 @@ app.get('/user/:id', async (req, res) => {
   }
 });
 
-app.get('/posts', async (req, res) => {
+app.get('/posts', authenticateToken, async (req, res) => {
   try {
     const posts = await getPosts();
     res.status(200).json({ status: 'success', data: posts });
@@ -105,7 +108,7 @@ app.get('/posts/user/:user_id', async (req, res) => {
   }
 });
 
-app.post('/post', async (req, res) => {
+app.post('/post', authenticateToken, async (req, res) => {
   const { title, warframe, content, tags, image, user_id } = req.body;
   try {
     await createPost(title, warframe, content, tags, image, user_id);
