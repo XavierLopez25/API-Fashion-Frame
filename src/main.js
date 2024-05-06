@@ -129,7 +129,7 @@ app.put('/post/:id', authenticateToken, async (req, res) => {
   }
 });
 
-app.delete('/post/:id', async (req, res) => {
+app.delete('/post/:id', authenticateToken, async (req, res) => {
   const id = req.params.id;
   try {
     const result = await deletePost(id);
