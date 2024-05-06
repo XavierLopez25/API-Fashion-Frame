@@ -20,7 +20,7 @@ export async function getUserById(id) {
 
 export async function getPosts() {
   const result = await conn.query(`SELECT * FROM blog_posts`);
-  return result.rows.length > 0 ? 'No posts found.' : result.rows;
+  return result.rows.length > 0 ? result.rows : 'No posts found.';
 }
 
 export async function getPostById(id) {
